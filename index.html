@@ -51,7 +51,20 @@
         <!-- <button class="btn btn-ghost" id="verify-btn" type="button">Vérifier</button> -->
         <button class="btn btn-primary" id="export-btn">Générer le fichier</button>
       </section>
+      <section class="card panel editor-panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="editor-title">Aucun magasin sélectionné</h2>
+            <p id="editor-subtitle">Charge un CANAC ou ajoute un magasin.</p>
+          </div>
+          <div class="nav store-picker">
+            <select id="store-select"></select>
+          </div>
+        </div>
 
+        <div id="editor" class="editor"></div>
+      </section>
+      
       <section class="grid">
         <aside class="card panel stores-panel" hidden>
           <div class="panel-head">
@@ -70,20 +83,7 @@
           <div id="stores-list" class="stores-list"></div>
         </aside>
 
-        <section class="card panel editor-panel">
-          <div class="panel-head">
-            <div>
-              <h2 id="editor-title">Aucun magasin sélectionné</h2>
-              <p id="editor-subtitle">Charge un CANAC ou ajoute un magasin.</p>
-            </div>
-            <div class="nav store-picker">
-              <select id="store-select"></select>
-            </div>
-          </div>
-
-          <div id="editor" class="editor"></div>
-        </section>
-
+        
         <aside class="card panel summary-panel" hidden>
           <div class="panel-head">
             <div>
@@ -95,6 +95,7 @@
           <div id="status" class="status">Prêt.</div>
         </aside>
       </section>
+
       <footer class="footer">
         <div class="footer-content">
           <p>© <span id="footer-year"></span> <strong>MadDevOps</strong>. Tous droits réservés.</p>
