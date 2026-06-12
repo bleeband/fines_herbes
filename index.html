@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventaire CANAC</title>
+    <link rel="icon" type="image/png" href="logo.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <main class="app">
+      <header class="hero">
+        <div>
+          <span class="label-header">
+            <img src="logo_sansfond1.png" alt="Logo" class="logo-header" />
+            <span><h1>Inventaire CANAC</h1></span>
+          </span>
+          <p class="subtitle">Importe les 2 fichiers ( Canac + Royaumes ) et exporte le CANAC final.</p>
+        </div>
+        <!-- <div class="hero-card">
+          <div class="hero-card-label">Produits suivis</div>
+          <div class="hero-card-value" id="product-count">8</div>
+        </div> -->
+      </header>
+
+      <section class="toolbar card">
+        <label class="file-label">
+          <span class="label-header">
+            <img src="logo_sansfond1.png" alt="Logo" class="logo" />
+            <span>Fichier CANAC.XLSX</span>
+          </span>
+
+          <input type="file" id="canac-file" accept=".xlsx,.xls" />
+        </label>
+
+        <label class="file-label">
+          <span class="label-header">
+            <img src="canac.png" alt="Logo" class="logo" />
+            <span>Fichier Royaumes.xlsx</span>
+          </span>
+
+          <input type="file" id="royaumes-file" accept=".xlsx,.xls" />
+        </label>
+        <label>
+          Date cible
+          <input type="date" id="target-date" />
+        </label>
+        <!-- <button class="btn btn-ghost" id="verify-btn" type="button">Vérifier</button> -->
+        <button class="btn btn-primary" id="export-btn">Générer le fichier</button>
+      </section>
+
+      <section class="grid">
+        <aside class="card panel stores-panel" hidden>
+          <div class="panel-head">
+            <div>
+              <h2>Magasins</h2>
+              <p>Ajoute, enlève, sélectionne.</p>
+            </div>
+            <button class="btn btn-ghost" id="add-store-btn" type="button">+ Magasin</button>
+          </div>
+
+          <div class="inline-form">
+            <input id="store-input" type="text" placeholder="Ex: 12" />
+            <button class="btn" id="add-store-submit" type="button">Ajouter</button>
+          </div>
+
+          <div id="stores-list" class="stores-list"></div>
+        </aside>
+
+        <section class="card panel editor-panel">
+          <div class="panel-head">
+            <div>
+              <h2 id="editor-title">Aucun magasin sélectionné</h2>
+              <p id="editor-subtitle">Charge un CANAC ou ajoute un magasin.</p>
+            </div>
+            <div class="nav store-picker">
+              <select id="store-select"></select>
+            </div>
+          </div>
+
+          <div id="editor" class="editor"></div>
+        </section>
+
+        <aside class="card panel summary-panel" hidden>
+          <div class="panel-head">
+            <div>
+              <h2>Résumé</h2>
+              <p>Ce qui est prêt, manquant, ou importé.</p>
+            </div>
+          </div>
+          <div id="summary" class="summary"></div>
+          <div id="status" class="status">Prêt.</div>
+        </aside>
+      </section>
+      <footer class="footer">
+        <div class="footer-content">
+          <p>© <span id="footer-year"></span> <strong>MadDevOps</strong>. Tous droits réservés.</p>
+
+          <p class="footer-credit">
+            Conception, développement et maintenance web par
+            <a href="https://maddevops.com" target="_blank" rel="noopener noreferrer"> MadDevOps </a>
+          </p>
+        </div>
+      </footer>
+
+      <!-- Welcome Modal - Version 2 -->
+      <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+          <p style="font-size: 20px; margin: 20px 0 30px; line-height: 1.4">Allo doune, voici la version 2</p>
+          <button id="modal-close-btn" class="btn btn-primary">Compris !</button>
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        const modal = document.getElementById("welcome-modal");
+        const closeBtn = document.getElementById("modal-close-btn");
+
+        if (!modal) return;
+
+        const CURRENT_VERSION = "2"; // Change cette valeur quand tu modifies le message pour forcer l'affichage à nouveau
+
+        const shownVersion = localStorage.getItem("canac_modal_version");
+
+        // Affiche seulement si la version n'a jamais été vue ou est différente
+        if (shownVersion !== CURRENT_VERSION) {
+          setTimeout(function () {
+            modal.classList.add("show");
+          }, 450);
+        }
+
+        function closeModal() {
+          modal.classList.remove("show");
+          // On sauvegarde que cette version a été vue
+          localStorage.setItem("canac_modal_version", CURRENT_VERSION);
+        }
+
+        if (closeBtn) {
+          closeBtn.addEventListener("click", closeModal);
+        }
+
+        // Fermer en cliquant sur le fond
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Fermer avec Échap
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && modal.classList.contains("show")) {
+            closeModal();
+          }
+        });
+      })();
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
